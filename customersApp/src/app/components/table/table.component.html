@@ -20,6 +20,11 @@
     </mat-form-field>
   </div>
 
+  @if (loading) {
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+  } @else{
   <table
     mat-table
     [dataSource]="dataSource"
@@ -64,7 +69,11 @@
             <div class="element-diagram">
               <div class="element-header element-data">
                 <div class="info-row">
-                  <img class="element-avatar" [src]="element.avatar" alt="Avatar" />
+                  <img
+                    class="element-avatar"
+                    [src]="element.avatar"
+                    alt="Avatar"
+                  />
                   <mat-icon>person</mat-icon>&nbsp;
                   <strong class="element-name"
                     >{{ element.firstName }} {{ element.lastName }}</strong
@@ -116,4 +125,5 @@
     [pageSizeOptions]="[10, 25, 100]"
     aria-label="Select page of users"
   ></mat-paginator>
+  }
 </div>

@@ -15,6 +15,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { User } from '../../ngrx/user/user.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /**
  * @title Table with expandable rows
@@ -34,6 +35,7 @@ import { User } from '../../ngrx/user/user.module';
     MatPaginatorModule,
     MatSelect,
     MatOption,
+    MatProgressSpinnerModule,
   ],
   standalone: true,
 })
