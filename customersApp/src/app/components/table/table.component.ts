@@ -16,6 +16,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { User } from '../../ngrx/user/user.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule, formatDate } from '@angular/common';
 
 /**
  * @title Table with expandable rows
@@ -36,6 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelect,
     MatOption,
     MatProgressSpinnerModule,
+    CommonModule
   ],
   standalone: true,
 })
@@ -55,7 +57,7 @@ export class Table implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['users'] && changes['users'].currentValue) {
-      this.dataSource.data = changes['users'].currentValue;
+      this.assignColorsByBirthMonth();
     }
     if (changes['columnsToDisplay']) {
       this.columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
@@ -116,5 +118,56 @@ export class Table implements AfterViewInit, OnChanges {
       : { name: '', hasContract: '' };
 
     this.updateFilter(currentFilter.name, value);
+  }
+
+  private assignColorsByBirthMonth() {
+    const colors = [
+      '#FFB7A5',   
+      '#FFC3C3', 
+      '#FFE4A1', 
+      '#DCC6E0', 
+      '#A7E8F3', 
+      '#C4E7B2', 
+      '#F5B7D3',  
+      '#B0D8FF', 
+      '#C3FBD8', 
+      '#FFD8A8', 
+      '#E5EFC1', 
+      '#FFADAD',
+    ];
+    const monthCount: Record<number, number> = {};
+    const monthColors: Record<number, string> = {};
+
+    // Find how many users are born in each month
+    this.users.forEach((user) => {
+      const birthMonth = new Date(user.birthDate).getMonth();
+      monthCount[birthMonth] = (monthCount[birthMonth] || 0) + 1;
+    });
+
+    // Assign colors to months with more than one user
+    Object.keys(monthCount).forEach((month, index) => {
+      if (monthCount[+month] > 1) {
+        monthColors[+month] = colors[index % colors.length];
+      }
+    });
+
+    // Assign colors and emoji to users
+    this.users = this.users.map((user) => {
+      const birthMonth = new Date(user.birthDate).getMonth();
+      const highlightColor = monthColors[birthMonth] || null;
+      const birthdayIcon = highlightColor ? '🎂 ' : ''; 
+
+      return {
+        ...user,
+        birthDate: `${birthdayIcon}${formatDate(
+          user.birthDate,
+          'mediumDate',
+          'en'
+        )}`,
+        highlightColor,
+      };
+    });
+
+    this.dataSource.data = this.users;
   }
 }
