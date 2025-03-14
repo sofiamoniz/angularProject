@@ -52,9 +52,16 @@ export class Table implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  ngOnInit() {
+    /* search filter */
+    this.dataSource.filterPredicate = (data, filter) => {
+      return data.name.toLowerCase().includes(filter);
+    };
+  }
+
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
