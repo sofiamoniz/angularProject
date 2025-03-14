@@ -47,7 +47,6 @@
 }
 .element-diagram {
   min-width: 80px;
-  border: 2px solid black;
   padding: 8px;
   font-weight: lighter;
   margin: 8px 0;
@@ -77,4 +76,21 @@
 
 .select-filter {
   margin-left: 20px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+
+  &:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}
+
+.element-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
 }
