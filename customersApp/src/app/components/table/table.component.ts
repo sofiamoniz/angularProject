@@ -16,6 +16,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { User } from '../../ngrx/user/user.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { assignColorsByBirthMonth } from '../../helpers/functions';
 
 /**
  * @title Table with expandable rows
@@ -36,6 +38,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelect,
     MatOption,
     MatProgressSpinnerModule,
+    CommonModule
   ],
   standalone: true,
 })
@@ -55,7 +58,7 @@ export class Table implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['users'] && changes['users'].currentValue) {
-      this.dataSource.data = changes['users'].currentValue;
+      assignColorsByBirthMonth(this.users, this.dataSource);
     }
     if (changes['columnsToDisplay']) {
       this.columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];

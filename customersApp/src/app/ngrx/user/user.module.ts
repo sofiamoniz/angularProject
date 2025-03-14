@@ -1,8 +1,8 @@
 export interface User {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
-  birthDate: Date;
+  birthDate: Date | string;
   email: string;
   avatar: string;
   hasContract: boolean;
