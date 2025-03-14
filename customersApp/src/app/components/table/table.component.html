@@ -1,5 +1,5 @@
-<div class="row">
-  <div>
+<div>
+  <div class="topbar-filters">
     <mat-form-field>
       <mat-label>Filter</mat-label>
       <input
@@ -9,9 +9,8 @@
         #input
       />
     </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
+
+    <mat-form-field class="select-filter">
       <mat-label>Filter by danger</mat-label>
       <mat-select (selectionChange)="applySelectFilter($event.value)">
         <mat-option value="">---</mat-option>
@@ -20,11 +19,12 @@
       </mat-select>
     </mat-form-field>
   </div>
+
   <table
     mat-table
     [dataSource]="dataSource"
     multiTemplateDataRows
-    class="mat-elevation-z8"
+    class="mat-elevation-z8 custom-table"
   >
     @for (column of columnsToDisplay; track column) {
     <ng-container matColumnDef="{{ column }}">
@@ -39,8 +39,8 @@
           mat-icon-button
           aria-label="expand row"
           (click)="toggle(element); $event.stopPropagation()"
-          class="example-toggle-button"
-          [class.example-toggle-button-expanded]="isExpanded(element)"
+          class="toggle-button"
+          [class.toggle-button-expanded]="isExpanded(element)"
         >
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
@@ -55,19 +55,19 @@
         [attr.colspan]="columnsToDisplayWithExpand.length"
       >
         <div
-          class="example-element-detail-wrapper"
-          [class.example-element-detail-wrapper-expanded]="isExpanded(element)"
+          class="element-detail-wrapper"
+          [class.element-detail-wrapper-expanded]="isExpanded(element)"
         >
-          <div class="example-element-detail">
-            <div class="example-element-diagram">
-              <div class="example-element-position">{{ element.position }}</div>
-              <div class="example-element-symbol">{{ element.symbol }}</div>
-              <div class="example-element-name">{{ element.name }}</div>
-              <div class="example-element-weight">{{ element.weight }}</div>
+          <div class="element-detail">
+            <div class="element-diagram">
+              <div class="element-position">{{ element.position }}</div>
+              <div class="element-symbol">{{ element.symbol }}</div>
+              <div class="element-name">{{ element.name }}</div>
+              <div class="element-weight">{{ element.weight }}</div>
             </div>
-            <div class="example-element-description">
+            <div class="element-description">
               {{ element.description }}
-              <span class="example-element-description-attribution">
+              <span class="element-description-attribution">
                 -- Wikipedia
               </span>
             </div>
@@ -80,14 +80,14 @@
     <tr
       mat-row
       *matRowDef="let element; columns: columnsToDisplayWithExpand"
-      class="example-element-row"
-      [class.example-expanded-row]="isExpanded(element)"
+      class="element-row"
+      [class.expanded-row]="isExpanded(element)"
       (click)="toggle(element)"
     ></tr>
     <tr
       mat-row
       *matRowDef="let row; columns: ['expandedDetail']"
-      class="example-detail-row"
+      class="detail-row"
     ></tr>
     <!-- Row shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
