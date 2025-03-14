@@ -16,7 +16,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { User } from '../../ngrx/user/user.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { assignColorsByBirthMonth } from '../../helpers/functions';
 
 /**
