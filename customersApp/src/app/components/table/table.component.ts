@@ -61,7 +61,7 @@ export class Table implements AfterViewInit, OnChanges {
       assignColorsByBirthMonth(this.users, this.dataSource);
     }
     if (changes['columnsToDisplay']) {
-      this.columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+      this.columnsToDisplayWithExpand = [...this.columnsToDisplay, 'delete', 'expand'];
     }
     if (changes['loading']) {
       this.loading = changes['loading'].currentValue;
