@@ -55,39 +55,30 @@ export class Table implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  filterValues: any = {
-    name: '',
-    danger: '',
-  };
-
   ngOnInit() {
-    /* search filter */
     this.dataSource.filterPredicate = (data, filter) => {
-      const matchName = data.name
-        .toLowerCase()
-        .includes(this.filterValues.name);
-      const matchDanger =
-        this.filterValues.danger !== ''
-          ? data.danger.toString() === this.filterValues.danger
-          : true;
-
+      const { name, danger } = JSON.parse(filter);
+      const matchName = data.name.toLowerCase().includes(name);
+      const matchDanger = danger !== '' ? data.danger.toString() === danger : true;
+      
       return matchName && matchDanger;
     };
   }
 
-  updateFilter() {
-    this.dataSource.filter = JSON.stringify(this.filterValues);
+  updateFilter(name: string, danger: string) {
+    this.dataSource.filter = JSON.stringify({ name, danger });
     this.dataSource.paginator?.firstPage();
   }
-  
+
   applyFilter(event: Event) {
-    this.filterValues.name = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.updateFilter();
+    const name = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const currentFilter = this.dataSource.filter ? JSON.parse(this.dataSource.filter) : { name: '', danger: '' };
+    this.updateFilter(name, currentFilter.danger);
   }
-  
+
   applySelectFilter(value: string) {
-    this.filterValues.danger = value;
-    this.updateFilter();
+    const currentFilter = this.dataSource.filter ? JSON.parse(this.dataSource.filter) : { name: '', danger: '' };
+    this.updateFilter(currentFilter.name, value);
   }
 }
 
