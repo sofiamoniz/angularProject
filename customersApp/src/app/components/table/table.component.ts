@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatOption, MatSelect } from '@angular/material/select';
 
 /**
  * @title Table with expandable rows
@@ -23,12 +24,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatSelect,
+    MatOption,
   ],
   standalone: true,
 })
 export class Table implements AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
+  columnsToDisplay = ['name', 'weight', 'symbol', 'position', 'danger'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: PeriodicElement | null;
 
@@ -52,20 +55,39 @@ export class Table implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  filterValues: any = {
+    name: '',
+    danger: '',
+  };
+
   ngOnInit() {
     /* search filter */
     this.dataSource.filterPredicate = (data, filter) => {
-      return data.name.toLowerCase().includes(filter);
+      const matchName = data.name
+        .toLowerCase()
+        .includes(this.filterValues.name);
+      const matchDanger =
+        this.filterValues.danger !== ''
+          ? data.danger.toString() === this.filterValues.danger
+          : true;
+
+      return matchName && matchDanger;
     };
   }
 
+  updateFilter() {
+    this.dataSource.filter = JSON.stringify(this.filterValues);
+    this.dataSource.paginator?.firstPage();
+  }
+  
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.filterValues.name = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.updateFilter();
+  }
+  
+  applySelectFilter(value: string) {
+    this.filterValues.danger = value;
+    this.updateFilter();
   }
 }
 
@@ -75,6 +97,7 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
   description: string;
+  danger: boolean;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -85,6 +108,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     symbol: 'H',
     description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
         atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
+    danger: false,
   },
   {
     position: 2,
@@ -94,6 +118,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Helium is a chemical element with symbol He and atomic number 2. It is a
         colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
         group in the periodic table. Its boiling point is the lowest among all the elements.`,
+    danger: true,
   },
   {
     position: 3,
@@ -103,6 +128,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Lithium is a chemical element with symbol Li and atomic number 3. It is a soft,
         silvery-white alkali metal. Under standard conditions, it is the lightest metal and the
         lightest solid element.`,
+    danger: true,
   },
   {
     position: 4,
@@ -112,6 +138,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Beryllium is a chemical element with symbol Be and atomic number 4. It is a
         relatively rare element in the universe, usually occurring as a product of the spallation of
         larger atomic nuclei that have collided with cosmic rays.`,
+    danger: true,
   },
   {
     position: 5,
@@ -121,6 +148,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
         by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
         low-abundance element in the Solar system and in the Earth's crust.`,
+    danger: true,
   },
   {
     position: 6,
@@ -130,6 +158,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Carbon is a chemical element with symbol C and atomic number 6. It is nonmetallic
         and tetravalent—making four electrons available to form covalent chemical bonds. It belongs
         to group 14 of the periodic table.`,
+    danger: false,
   },
   {
     position: 7,
@@ -138,6 +167,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     symbol: 'N',
     description: `Nitrogen is a chemical element with symbol N and atomic number 7. It was first
         discovered and isolated by Scottish physician Daniel Rutherford in 1772.`,
+    danger: false,
   },
   {
     position: 8,
@@ -147,6 +177,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Oxygen is a chemical element with symbol O and atomic number 8. It is a member of
          the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing
          agent that readily forms oxides with most elements as well as with other compounds.`,
+    danger: false,
   },
   {
     position: 9,
@@ -156,6 +187,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Fluorine is a chemical element with symbol F and atomic number 9. It is the
         lightest halogen and exists as a highly toxic pale yellow diatomic gas at standard
         conditions.`,
+    danger: false,
   },
   {
     position: 10,
@@ -165,5 +197,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
     description: `Neon is a chemical element with symbol Ne and atomic number 10. It is a noble gas.
         Neon is a colorless, odorless, inert monatomic gas under standard conditions, with about
         two-thirds the density of air.`,
+    danger: true,
   },
 ];
