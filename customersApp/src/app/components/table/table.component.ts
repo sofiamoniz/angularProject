@@ -18,6 +18,7 @@ import { User } from '../../ngrx/user/user.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { assignColorsByBirthMonth } from '../../helpers/functions';
+import { DialogAnimationsExample } from '../delete-button/delete-button.component';
 
 /**
  * @title Table with expandable rows
@@ -38,7 +39,8 @@ import { assignColorsByBirthMonth } from '../../helpers/functions';
     MatSelect,
     MatOption,
     MatProgressSpinnerModule,
-    CommonModule
+    CommonModule,
+    DialogAnimationsExample
   ],
   standalone: true,
 })
