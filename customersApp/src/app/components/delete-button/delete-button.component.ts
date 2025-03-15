@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class DialogAnimationsExample {
+export class DeleteButtonComponent {
   @Output() delete = new EventEmitter<void>();
   
   readonly dialog = inject(MatDialog);

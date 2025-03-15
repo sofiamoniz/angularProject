@@ -20,7 +20,7 @@ import { User } from '../../ngrx/user/user.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { assignColorsByBirthMonth } from '../../helpers/functions';
-import { DialogAnimationsExample } from '../delete-button/delete-button.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { MatChipsModule } from '@angular/material/chips';
 
 /**
@@ -43,12 +43,12 @@ import { MatChipsModule } from '@angular/material/chips';
     MatOption,
     MatProgressSpinnerModule,
     CommonModule,
-    DialogAnimationsExample,
+    DeleteButtonComponent,
     MatChipsModule,
   ],
   standalone: true,
 })
-export class Table implements AfterViewInit, OnChanges {
+export class TableComponent implements AfterViewInit, OnChanges {
   @Input() users: User[] = [];
   @Input() loading: boolean = false;
   @Input() columnsToDisplay: string[] = [];
