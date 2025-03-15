@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { assignColorsByBirthMonth } from '../../helpers/functions';
 import { DialogAnimationsExample } from '../delete-button/delete-button.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 /**
  * @title Table with expandable rows
@@ -43,6 +44,7 @@ import { DialogAnimationsExample } from '../delete-button/delete-button.componen
     MatProgressSpinnerModule,
     CommonModule,
     DialogAnimationsExample,
+    MatChipsModule,
   ],
   standalone: true,
 })
@@ -156,6 +158,5 @@ export class Table implements AfterViewInit, OnChanges {
     this.paginator.pageIndex = previousPageIndex;
 
     this.paginator.length = this.dataSource.filteredData.length;
-
   }
 }
