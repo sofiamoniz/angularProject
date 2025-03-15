@@ -10,7 +10,7 @@ export interface UserState {
   };
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   users: [],
   loading: false,
   error: { deleteUser: false },

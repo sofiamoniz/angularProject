@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Table } from '../table/table.component';
+import { Component } from '@angular/core';
+import { TableComponent } from '../table/table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { User } from '../../ngrx/user/user.module';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, Table, MatToolbarModule, MatIconModule],
+  imports: [CommonModule, TableComponent, MatToolbarModule, MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
