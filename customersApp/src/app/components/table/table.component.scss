@@ -102,7 +102,7 @@
   margin-right: 8px;
 }
 
-.spinner{
+.spinner {
   position: absolute;
   top: 0;
   left: 0;
@@ -121,4 +121,28 @@
   justify-content: center;
   gap: 8px;
   width: 100%;
+}
+
+$green-pastel: rgb(125, 250, 125);
+$red-pastel: #ff8a80;
+$border-color-green: green;
+$border-color-red: red;
+
+.contract-chip,
+.no-contract-chip {
+  pointer-events: none;
+  font-size: 12px;
+  padding: 2px 6px;
+  height: auto;
+  border: 1px dashed;
+
+  &.contract-chip {
+    background-color: $green-pastel;
+    border-color: $border-color-green;
+  }
+
+  &.no-contract-chip {
+    background-color: $red-pastel;
+    border-color: $border-color-red;
+  }
 }
