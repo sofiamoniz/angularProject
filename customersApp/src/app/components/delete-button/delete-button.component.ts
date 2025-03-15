@@ -28,9 +28,11 @@ export class DialogAnimationsExample {
   readonly dialog = inject(MatDialog);
 
   openDialog(
+    event: MouseEvent,
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
+    event.stopPropagation(); // prevents the event from propagating to the parent
     this.dialog.open(DialogContent, {
       width: '250px',
       enterAnimationDuration,

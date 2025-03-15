@@ -154,10 +154,7 @@ export class Table implements AfterViewInit, OnChanges {
     this.paginator.pageSize = previousPageSize;
     this.paginator.pageIndex = previousPageIndex;
 
-    setTimeout(() => {
-      if (this.paginator) {
-        this.paginator.length = this.users.length;
-      }
-    });
+    this.paginator.length = this.dataSource.filteredData.length;
+
   }
 }

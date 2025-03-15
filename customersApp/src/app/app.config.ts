@@ -9,6 +9,8 @@ import { userReducer } from './ngrx/user/user.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { UserEffects } from './ngrx/user/user.effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { GeneralEffects } from './ngrx/general/general.effects';
+import { GeneralReducer } from './ngrx/general/general.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,8 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
-    provideEffects([UserEffects]),
-    provideStore({ users: userReducer }),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), 
+    provideEffects([UserEffects, GeneralEffects]),
+    provideStore({ users: userReducer, general: GeneralReducer }),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

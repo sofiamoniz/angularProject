@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, map, mergeMap, of } from 'rxjs';
 import { UserService } from './user.service';
 import { UserActions } from './user.actions';
 import { User } from './user.module';
 import { Store } from '@ngrx/store';
+import { GeneralActions } from '../general/general.actions';
 
 @Injectable()
 export class UserEffects {
@@ -12,7 +13,8 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private store: Store
-  ) {}
+  )
+  {}
 
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
@@ -35,11 +37,39 @@ export class UserEffects {
         this.userService.deleteUser(id).pipe(
           map(() => {
             this.store.dispatch(UserActions.loadUsers()); // Reload info
+
+            // dispatch success message
+            this.store.dispatch(
+              GeneralActions.showNotification({
+                data: {
+                  message: 'User deleted with success',
+                  actionLabel: 'Close',
+                  duration: 3000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                  panelClass: ['success-snackbar'],
+                },
+              })
+            );
+
             return UserActions.deleteUserSuccess({ id });
           }),
-          catchError((error) =>
-            of(UserActions.deleteUserFailure({ error: error.message }))
-          )
+          catchError((error) => {
+            // dispatch error message
+            this.store.dispatch(
+              GeneralActions.showNotification({
+                data: {
+                  message: 'Error deleting user',
+                  actionLabel: 'Close',
+                  duration: 3000,
+                  horizontalPosition: 'right',
+                  verticalPosition: 'top',
+                  panelClass: ['error-snackbar'],
+                },
+              })
+            );
+            return of(UserActions.deleteUserFailure({ error: error.message }));
+          })
         )
       )
     )
