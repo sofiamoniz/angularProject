@@ -5,11 +5,15 @@ import { User } from './user.module';
 export interface UserState {
   users: User[];
   loading: boolean;
+  error: {
+    deleteUser: boolean;
+  };
 }
 
 const initialState: UserState = {
   users: [],
   loading: false,
+  error: { deleteUser: false },
 };
 
 export const userReducer = createReducer(
@@ -26,6 +30,13 @@ export const userReducer = createReducer(
   on(UserActions.loadUsersFailure, (state) => ({
     ...state,
     loading: false,
+  })),
+  on(UserActions.deleteUserSuccess, (state, { id }) => ({
+    ...state,
+    users: state.users.filter(user => user.id !== id),
+  })),
+  on(UserActions.deleteUserFailure, (state) => ({
+    ...state,
+    error: { ...state.error, deleteUser: true },
   }))
 );
-
