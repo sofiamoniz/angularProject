@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, inject, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MAT_DIALOG_DATA,
   MatDialog,
   MatDialogActions,
   MatDialogClose,
@@ -22,6 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
 })
 export class DialogAnimationsExample {
+  @Output() delete = new EventEmitter<void>();
+  
   readonly dialog = inject(MatDialog);
 
   openDialog(
@@ -32,6 +35,7 @@ export class DialogAnimationsExample {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { onDelete: () => this.delete.emit() },
     });
   }
 }
@@ -45,7 +49,7 @@ export class DialogAnimationsExample {
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button mat-dialog-close>No</button>
-      <button mat-button mat-dialog-close cdkFocusInitial>Delete</button>
+      <button mat-button (click)="handleDelete()" cdkFocusInitial>Delete</button>
     </mat-dialog-actions>
   `,
   standalone: true,
@@ -59,5 +63,14 @@ export class DialogAnimationsExample {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogContent {
-  readonly dialogRef = inject(MatDialogRef<DialogContent>);
+  constructor(
+    private dialogRef: MatDialogRef<DialogContent>,
+    @Inject(MAT_DIALOG_DATA) public data: { onDelete: () => void }
+  ) {}
+  handleDelete() {
+    if (this.data?.onDelete) {
+      this.data.onDelete(); 
+    }
+    this.dialogRef.close();
+  }
 }

@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -40,7 +42,7 @@ import { DialogAnimationsExample } from '../delete-button/delete-button.componen
     MatOption,
     MatProgressSpinnerModule,
     CommonModule,
-    DialogAnimationsExample
+    DialogAnimationsExample,
   ],
   standalone: true,
 })
@@ -49,6 +51,7 @@ export class Table implements AfterViewInit, OnChanges {
   @Input() loading: boolean = false;
   @Input() columnsToDisplay: string[] = [];
   @Input() columnLabels: Record<string, string> = {};
+  @Output() confirmDelete = new EventEmitter<string>();
   dataSource = new MatTableDataSource<User>([]);
   columnsToDisplayWithExpand: string[] = [];
   expandedElement!: User | null;
@@ -61,10 +64,27 @@ export class Table implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['users'] && changes['users'].currentValue) {
       assignColorsByBirthMonth(this.users, this.dataSource);
+
+      /* wait for paginator to initialize and updates it with the new data */
+      if (this.paginator) {
+        this.updatePaginator();
+      } else {
+        setTimeout(() => {
+          if (this.paginator) {
+            this.updatePaginator();
+          }
+        });
+      }
     }
+
     if (changes['columnsToDisplay']) {
-      this.columnsToDisplayWithExpand = [...this.columnsToDisplay, 'delete', 'expand'];
+      this.columnsToDisplayWithExpand = [
+        ...this.columnsToDisplay,
+        'delete',
+        'expand',
+      ];
     }
+
     if (changes['loading']) {
       this.loading = changes['loading'].currentValue;
     }
@@ -121,5 +141,23 @@ export class Table implements AfterViewInit, OnChanges {
       : { name: '', hasContract: '' };
 
     this.updateFilter(currentFilter.name, value);
+  }
+
+  /* updates paginator after table data changes */
+  private updatePaginator(): void {
+    if (!this.paginator) return;
+
+    const previousPageSize = this.paginator.pageSize;
+    const previousPageIndex = this.paginator.pageIndex;
+
+    this.dataSource.paginator = this.paginator;
+    this.paginator.pageSize = previousPageSize;
+    this.paginator.pageIndex = previousPageIndex;
+
+    setTimeout(() => {
+      if (this.paginator) {
+        this.paginator.length = this.users.length;
+      }
+    });
   }
 }
