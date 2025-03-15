@@ -18,6 +18,13 @@
         <mat-option value="false">False</mat-option>
       </mat-select>
     </mat-form-field>
+
+    <button mat-button class="refresh-button" (click)="refreshData.emit()" [disabled]="loading">
+      <div class="btn-content">
+        <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        <span *ngIf="!loading">Refresh table</span>
+      </div>
+    </button>
   </div>
 
   @if (loading) {
@@ -62,7 +69,9 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
       <td mat-cell *matCellDef="let element">
-        <app-delete-button (delete)="confirmDelete.emit(element.id)"></app-delete-button>
+        <app-delete-button
+          (delete)="confirmDelete.emit(element.id)"
+        />
       </td>
     </ng-container>
 
@@ -136,6 +145,6 @@
   <mat-paginator
     [pageSizeOptions]="[10, 25, 100]"
     aria-label="Select page of users"
-  ></mat-paginator>
+  />
   }
 </div>

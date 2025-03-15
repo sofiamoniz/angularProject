@@ -52,6 +52,7 @@ export class Table implements AfterViewInit, OnChanges {
   @Input() columnsToDisplay: string[] = [];
   @Input() columnLabels: Record<string, string> = {};
   @Output() confirmDelete = new EventEmitter<string>();
+  @Output() refreshData = new EventEmitter<void>();
   dataSource = new MatTableDataSource<User>([]);
   columnsToDisplayWithExpand: string[] = [];
   expandedElement!: User | null;
