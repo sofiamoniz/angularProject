@@ -41,10 +41,14 @@ export class DashboardComponent {
   };
 
   constructor(private readonly store: Store<{ users: UserState }>) {
-    this.store.dispatch(UserActions.loadUsers());
+    this.getData();
   }
 
   deleteUser(id: string) {
     this.store.dispatch(UserActions.deleteUser({ id }));
+  }
+
+  getData() {
+    this.store.dispatch(UserActions.loadUsers());
   }
 }
