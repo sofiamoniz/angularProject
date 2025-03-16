@@ -136,7 +136,7 @@ I believe that, in a real-world scenario, the birthday feature (highlighting eac
 
 - Completely separate the logic from the table component.  
 
-- Implement an automatic table refresh interval and persist table filters in NgRx so they remain applied after refresh requests.
+- Implement an optional automatic table refresh interval and persist table filters in NgRx so they remain applied after refresh requests.
 
 - Create proper error handling—while NgRx has error variables for each request, they are not yet being used.  
 
