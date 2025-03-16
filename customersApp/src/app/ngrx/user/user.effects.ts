@@ -38,7 +38,7 @@ export class UserEffects {
           map(() => {
             this.store.dispatch(UserActions.loadUsers()); // Reload info
 
-            // dispatch success message
+             /* dispatch success message */
             this.store.dispatch(
               GeneralActions.showNotification({
                 data: {
@@ -55,7 +55,7 @@ export class UserEffects {
             return UserActions.deleteUserSuccess({ id });
           }),
           catchError((error) => {
-            // dispatch error message
+             /* dispatch error message */
             this.store.dispatch(
               GeneralActions.showNotification({
                 data: {
