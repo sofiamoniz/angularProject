@@ -21,6 +21,7 @@ This project was developed using **Angular 17**. It consists of a single-page ap
 
 ## 🏗️ Repository structure  
 
+```plaintext
 /customersApp
 │── cypress/  
 │   │── downloads/       # Folder where downloaded files during tests are stored  
@@ -49,6 +50,7 @@ This project was developed using **Angular 17**. It consists of a single-page ap
 │── package-lock.json           # Locked dependencies for reproducible builds
 │── tsconfig.json               # TypeScript configuration
 │── .editorconfig               # Editor settings and formatting rules
+```
 
 
 ## 🛠 Technologies
@@ -61,7 +63,7 @@ This project was built using the following technologies:
 -   **RxJS** - Reactive programming
 -   **TypeScript**
 -   **SCSS** - Styling
--   **Jest** - Unit testing
+-   **Karma & Jasmine** - Unit testing
 -   **Cypress** - End-to-end testing
 -   **Git & GitHub** - Version control, following a structured workflow with branches and pull requests. Commits are well-organized and follow a clear naming convention.
 
