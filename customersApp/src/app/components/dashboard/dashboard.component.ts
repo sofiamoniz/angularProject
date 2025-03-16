@@ -9,6 +9,9 @@ import { map, Observable, startWith } from 'rxjs';
 import { UserState } from '../../ngrx/user/user.reducer';
 import { CommonModule } from '@angular/common';
 
+/**
+ * @title Main dashboard
+ */
 @Component({
   selector: 'app-dashboard',
   standalone: true,

@@ -112,7 +112,8 @@ export class TableComponent implements AfterViewInit, OnChanges {
     this.dataSource.filterPredicate = (data, filter) => {
       const { name, hasContract } = JSON.parse(filter);
 
-      const nameParts = name.split(' ').filter((part: string[]) => part.length > 0); // Divide a pesquisa em partes
+      /* split name into parts so that the user can search for firstName, lastName or firstName + lastName */
+      const nameParts = name.split(' ').filter((part: string[]) => part.length > 0);
 
       const matchName = nameParts.every(
         (part: string) =>
@@ -149,7 +150,7 @@ export class TableComponent implements AfterViewInit, OnChanges {
     this.updateFilter(currentFilter.name, value);
   }
 
-  /* updates paginator after table data changes */
+  /* Updates paginator after table data changes */
   private updatePaginator(): void {
     if (!this.paginator) return;
 

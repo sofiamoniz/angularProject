@@ -12,7 +12,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 
 /**
- * @title Dialog Animations
+ * @title Delete button with a confirmation modal
  */
 @Component({
   selector: 'app-delete-button',
