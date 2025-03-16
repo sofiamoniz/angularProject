@@ -11,9 +11,8 @@ export class UserService {
 
   private headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
-    Accept: 'application/json',
-    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-    Authorization: '',
+    Accept: '*/*',
+    'Cache-Control': 'no-cache',
   });
 
   constructor(private http: HttpClient) {}
@@ -23,6 +22,8 @@ export class UserService {
   }
 
   deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headers });
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
+      headers: this.headers,
+    });
   }
 }

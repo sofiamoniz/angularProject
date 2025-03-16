@@ -112,10 +112,13 @@ export class TableComponent implements AfterViewInit, OnChanges {
     this.dataSource.filterPredicate = (data, filter) => {
       const { name, hasContract } = JSON.parse(filter);
 
-      const matchName = name
-        ? data.firstName.toLowerCase().includes(name) ||
-          data.lastName.toLowerCase().includes(name)
-        : true;
+      const nameParts = name.split(' ').filter((part: string[]) => part.length > 0); // Divide a pesquisa em partes
+
+      const matchName = nameParts.every(
+        (part: string) =>
+          data.firstName.toLowerCase().includes(part) ||
+          data.lastName.toLowerCase().includes(part)
+      );
 
       const matchHasContract =
         hasContract !== '' ? data.hasContract.toString() === hasContract : true;
