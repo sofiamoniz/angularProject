@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TableComponent } from '../table/table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,12 +16,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
   users$: Observable<User[]> = this.store
     .select((state: { users: UserState }) => state.users.users)
     .pipe(
       map((users) => users ?? []),
-      startWith([]) 
+      startWith([])
     );
 
   loading$: Observable<boolean> = this.store
@@ -40,7 +40,9 @@ export class DashboardComponent {
     hasContract: 'Has Contract?',
   };
 
-  constructor(private readonly store: Store<{ users: UserState }>) {
+  constructor(private readonly store: Store<{ users: UserState }>) {}
+
+  ngOnInit(): void {
     this.getData();
   }
 
